@@ -1,0 +1,3 @@
+AWS_REGION: us-east-1
+VpcCIDR: 10.16.0.0/16
+PrivateSubnet1CIDR: 
