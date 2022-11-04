@@ -84,7 +84,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       AssignIpv6AddressOnCreation: true
-      IPv6CidrBlock:
+      Ipv6CidrBlock:
         !Select
           - 1
           - Fn::Cidr:
@@ -124,7 +124,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       AssignIpv6AddressOnCreation: true
-      IPv6CidrBlock:
+      Ipv6CidrBlock:
         !Select
           - 3
           - Fn::Cidr:
