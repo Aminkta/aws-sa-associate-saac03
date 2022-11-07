@@ -33,11 +33,11 @@ Parameters:
     Description: Please enter the IP range (CIDR notation) for the private subnet
     Type: String
 
-  PrivateSubnet4Name:
+  PublicSubnet4Name:
     Description: Subnet Name
     Type: String
 
-  PrivateSubnet4CIDR:
+  PublicSubnet4CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet
     Type: String
 
@@ -65,11 +65,11 @@ Parameters:
     Description: Please enter the IP range (CIDR notation) for the private subnet
     Type: String
 
-  PrivateSubnet8Name:
+  PublicSubnet8Name:
     Description: Subnet Name
     Type: String
 
-  PrivateSubnet8CIDR:
+  PublicSubnet8CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet
     Type: String
 
@@ -97,12 +97,16 @@ Parameters:
     Description: Please enter the IP range (CIDR notation) for the private subnet
     Type: String
 
-  PrivateSubnet12Name:
+  PublicSubnet12Name:
     Description: Subnet Name
     Type: String
 
-  PrivateSubnet12CIDR:
+  PublicSubnet12CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet
+    Type: String
+  
+  RouteTableVpc1Name:
+    Description: Please Enter Route Table name
     Type: String
 
 Resources:
@@ -115,6 +119,43 @@ Resources:
       Tags:
         - Key: Name
           Value: !Ref VpcName
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Ref VpcName
+
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Ref RouteTableVpc1Name
+
+  DefaultPublicRouteIpv4:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  DefaultPublicRouteIpv6:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationIpv6CidrBlock: "::/0"
+      GatewayId: !Ref InternetGateway
 
   IPv6CidrBlock:
     Type: AWS::EC2::VPCCidrBlock
@@ -182,7 +223,7 @@ Resources:
         - Key: Name
           Value: !Ref PrivateSubnet3Name
 
-  PrivateSubnet4:
+  PublicSubnet4:
     Type: AWS::EC2::Subnet
     DependsOn: IPv6CidrBlock
     Properties:
@@ -196,11 +237,17 @@ Resources:
             - 256
             - 64
       AvailabilityZone: !Select [ 0, !GetAZs  '' ]
-      CidrBlock: !Ref PrivateSubnet4CIDR
-      MapPublicIpOnLaunch: false
+      CidrBlock: !Ref PublicSubnet4CIDR
+      MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Ref PrivateSubnet4Name
+          Value: !Ref PublicSubnet4Name
+
+  PublicSubnet4RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet4
 
   PrivateSubnet5:
     Type: AWS::EC2::Subnet
@@ -262,7 +309,7 @@ Resources:
         - Key: Name
           Value: !Ref PrivateSubnet7Name
 
-  PrivateSubnet8:
+  PublicSubnet8:
     Type: AWS::EC2::Subnet
     DependsOn: IPv6CidrBlock
     Properties:
@@ -276,11 +323,17 @@ Resources:
             - 256
             - 64
       AvailabilityZone: !Select [ 1, !GetAZs  '' ]
-      CidrBlock: !Ref PrivateSubnet8CIDR
-      MapPublicIpOnLaunch: false
+      CidrBlock: !Ref PublicSubnet8CIDR
+      MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Ref PrivateSubnet8Name
+          Value: !Ref PublicSubnet8Name
+
+  PublicSubnet8RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet8
 
   PrivateSubnet9:
     Type: AWS::EC2::Subnet
@@ -342,7 +395,7 @@ Resources:
         - Key: Name
           Value: !Ref PrivateSubnet11Name
 
-  PrivateSubnet12:
+  PublicSubnet12:
     Type: AWS::EC2::Subnet
     DependsOn: IPv6CidrBlock
     Properties:
@@ -356,11 +409,18 @@ Resources:
             - 256
             - 64
       AvailabilityZone: !Select [ 1, !GetAZs  '' ]
-      CidrBlock: !Ref PrivateSubnet12CIDR
-      MapPublicIpOnLaunch: false
+      CidrBlock: !Ref PublicSubnet12CIDR
+      MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Ref PrivateSubnet12Name
+          Value: !Ref PublicSubnet12Name
+
+
+  PublicSubnet12RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet12
 
 Outputs:
   VPC:
@@ -369,7 +429,7 @@ Outputs:
 
   PrivateSubnets:
     Description: A list of the private subnets
-    Value: !Join [ ",", [ !Ref PrivateSubnet1, !Ref PrivateSubnet2, !Ref PrivateSubnet3, !Ref PrivateSubnet4 ]]
+    Value: !Join [ ",", [ !Ref PrivateSubnet1, !Ref PrivateSubnet2, !Ref PrivateSubnet3, !Ref PublicSubnet4 ]]
 
   PrivateSubnet1:
     Description: A reference to the private subnet in the 1st Availability Zone
@@ -383,9 +443,9 @@ Outputs:
     Description: A reference to the private subnet in the 1st Availability Zone
     Value: !Ref PrivateSubnet3
 
-  PrivateSubnet4:
+  PublicSubnet4:
     Description: A reference to the private subnet in the 1st Availability Zone
-    Value: !Ref PrivateSubnet4
+    Value: !Ref PublicSubnet4
 
   PrivateSubnet5:
     Description: A reference to the private subnet in the 2nd Availability Zone
@@ -399,9 +459,9 @@ Outputs:
     Description: A reference to the private subnet in the 2nd Availability Zone
     Value: !Ref PrivateSubnet7
 
-  PrivateSubnet8:
+  PublicSubnet8:
     Description: A reference to the private subnet in the 2nd Availability Zone
-    Value: !Ref PrivateSubnet8
+    Value: !Ref PublicSubnet8
 
   PrivateSubnet9:
     Description: A reference to the private subnet in the 3rd Availability Zone
@@ -415,7 +475,7 @@ Outputs:
     Description: A reference to the private subnet in the 3rd Availability Zone
     Value: !Ref PrivateSubnet11
 
-  PrivateSubnet12:
+  PublicSubnet12:
     Description: A reference to the private subnet in the 3rd Availability Zone
-    Value: !Ref PrivateSubnet12
+    Value: !Ref PublicSubnet12
 

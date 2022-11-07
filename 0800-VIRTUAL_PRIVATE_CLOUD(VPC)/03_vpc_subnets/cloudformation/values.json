@@ -32,11 +32,11 @@
         "ParameterValue": "sn-app-A"
     },
     {
-        "ParameterKey": "PrivateSubnet4CIDR",
+        "ParameterKey": "PublicSubnet4CIDR",
         "ParameterValue": "10.16.48.0/20"
     },   
     {
-        "ParameterKey": "PrivateSubnet4Name",
+        "ParameterKey": "PublicSubnet4Name",
         "ParameterValue": "sn-web-A"
     },
     {
@@ -64,11 +64,11 @@
         "ParameterValue": "sn-app-B"
     },
     {
-        "ParameterKey": "PrivateSubnet8CIDR",
+        "ParameterKey": "PublicSubnet8CIDR",
         "ParameterValue": "10.16.112.0/20"
     },   
     {
-        "ParameterKey": "PrivateSubnet8Name",
+        "ParameterKey": "PublicSubnet8Name",
         "ParameterValue": "sn-web-B"
     },
     {
@@ -96,12 +96,16 @@
         "ParameterValue": "sn-app-C"
     },
     {
-        "ParameterKey": "PrivateSubnet12CIDR",
+        "ParameterKey": "PublicSubnet12CIDR",
         "ParameterValue": "10.16.176.0/20"
     },   
     {
-        "ParameterKey": "PrivateSubnet12Name",
+        "ParameterKey": "PublicSubnet12Name",
         "ParameterValue": "sn-web-C"
+    },
+    {
+        "ParameterKey": "RouteTableVpc1Name",
+        "ParameterValue": "a4l-vpc1-rt-web"
     }
 ]
   
