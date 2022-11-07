@@ -10,7 +10,7 @@ Parameters:
     Type: String
 
   PrivateSubnet1Name:
-    Description: Name of 1st subnet
+    Description: Subnet Name
     Type: String
 
   PrivateSubnet1CIDR:
@@ -18,7 +18,7 @@ Parameters:
     Type: String
 
   PrivateSubnet2Name:
-    Description: Name of 2nd subnet
+    Description: Subnet Name
     Type: String
 
   PrivateSubnet2CIDR:
@@ -26,7 +26,7 @@ Parameters:
     Type: String
 
   PrivateSubnet3Name:
-    Description: Name of 2nd subnet
+    Description: Subnet Name
     Type: String
 
   PrivateSubnet3CIDR:
@@ -34,10 +34,74 @@ Parameters:
     Type: String
 
   PrivateSubnet4Name:
-    Description: Name of 2nd subnet
+    Description: Subnet Name
     Type: String
 
   PrivateSubnet4CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet
+    Type: String
+
+  PrivateSubnet5Name:
+    Description: Subnet Name
+    Type: String
+
+  PrivateSubnet5CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet
+    Type: String
+
+  PrivateSubnet6Name:
+    Description: Subnet Name
+    Type: String
+
+  PrivateSubnet6CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet
+    Type: String
+
+  PrivateSubnet7Name:
+    Description: Subnet Name
+    Type: String
+
+  PrivateSubnet7CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet
+    Type: String
+
+  PrivateSubnet8Name:
+    Description: Subnet Name
+    Type: String
+
+  PrivateSubnet8CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet
+    Type: String
+
+  PrivateSubnet9Name:
+    Description: Subnet Name
+    Type: String
+
+  PrivateSubnet9CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet
+    Type: String
+
+  PrivateSubnet10Name:
+    Description: Subnet Name
+    Type: String
+
+  PrivateSubnet10CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet
+    Type: String
+
+  PrivateSubnet11Name:
+    Description: Subnet Name
+    Type: String
+
+  PrivateSubnet11CIDR:
+    Description: Please enter the IP range (CIDR notation) for the private subnet
+    Type: String
+
+  PrivateSubnet12Name:
+    Description: Subnet Name
+    Type: String
+
+  PrivateSubnet12CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet
     Type: String
 
@@ -76,7 +140,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub PrivateSubnet1Name
+          Value: !Ref PrivateSubnet1Name
 
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
@@ -96,7 +160,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: PrivateSubnet2Name
+          Value: !Ref PrivateSubnet2Name
 
   PrivateSubnet3:
     Type: AWS::EC2::Subnet
@@ -116,7 +180,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub PrivateSubnet3Name
+          Value: !Ref PrivateSubnet3Name
 
   PrivateSubnet4:
     Type: AWS::EC2::Subnet
@@ -136,7 +200,167 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: PrivateSubnet4Name
+          Value: !Ref PrivateSubnet4Name
+
+  PrivateSubnet5:
+    Type: AWS::EC2::Subnet
+    DependsOn: IPv6CidrBlock
+    Properties:
+      VpcId: !Ref VPC
+      AssignIpv6AddressOnCreation: true
+      Ipv6CidrBlock:
+        !Select
+          - 4
+          - Fn::Cidr:
+            - !Select [ 0, !GetAtt VPC.Ipv6CidrBlocks]
+            - 256
+            - 64
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PrivateSubnet5CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Ref PrivateSubnet5Name
+
+  PrivateSubnet6:
+    Type: AWS::EC2::Subnet
+    DependsOn: IPv6CidrBlock
+    Properties:
+      VpcId: !Ref VPC
+      AssignIpv6AddressOnCreation: true
+      Ipv6CidrBlock:
+        !Select
+          - 5
+          - Fn::Cidr:
+            - !Select [ 0, !GetAtt VPC.Ipv6CidrBlocks]
+            - 256
+            - 64
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PrivateSubnet6CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Ref PrivateSubnet6Name
+
+  PrivateSubnet7:
+    Type: AWS::EC2::Subnet
+    DependsOn: IPv6CidrBlock
+    Properties:
+      VpcId: !Ref VPC
+      AssignIpv6AddressOnCreation: true
+      Ipv6CidrBlock:
+        !Select
+          - 6
+          - Fn::Cidr:
+            - !Select [ 0, !GetAtt VPC.Ipv6CidrBlocks]
+            - 256
+            - 64
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PrivateSubnet7CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Ref PrivateSubnet7Name
+
+  PrivateSubnet8:
+    Type: AWS::EC2::Subnet
+    DependsOn: IPv6CidrBlock
+    Properties:
+      VpcId: !Ref VPC
+      AssignIpv6AddressOnCreation: true
+      Ipv6CidrBlock:
+        !Select
+          - 7
+          - Fn::Cidr:
+            - !Select [ 0, !GetAtt VPC.Ipv6CidrBlocks]
+            - 256
+            - 64
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PrivateSubnet8CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Ref PrivateSubnet8Name
+
+  PrivateSubnet9:
+    Type: AWS::EC2::Subnet
+    DependsOn: IPv6CidrBlock
+    Properties:
+      VpcId: !Ref VPC
+      AssignIpv6AddressOnCreation: true
+      Ipv6CidrBlock:
+        !Select
+          - 8
+          - Fn::Cidr:
+            - !Select [ 0, !GetAtt VPC.Ipv6CidrBlocks]
+            - 256
+            - 64
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PrivateSubnet9CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Ref PrivateSubnet9Name
+
+  PrivateSubnet10:
+    Type: AWS::EC2::Subnet
+    DependsOn: IPv6CidrBlock
+    Properties:
+      VpcId: !Ref VPC
+      AssignIpv6AddressOnCreation: true
+      Ipv6CidrBlock:
+        !Select
+          - 9
+          - Fn::Cidr:
+            - !Select [ 0, !GetAtt VPC.Ipv6CidrBlocks]
+            - 256
+            - 64
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PrivateSubnet10CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Ref PrivateSubnet10Name
+
+  PrivateSubnet11:
+    Type: AWS::EC2::Subnet
+    DependsOn: IPv6CidrBlock
+    Properties:
+      VpcId: !Ref VPC
+      AssignIpv6AddressOnCreation: true
+      Ipv6CidrBlock:
+        !Select
+          - 10
+          - Fn::Cidr:
+            - !Select [ 0, !GetAtt VPC.Ipv6CidrBlocks]
+            - 256
+            - 64
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PrivateSubnet11CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Ref PrivateSubnet11Name
+
+  PrivateSubnet12:
+    Type: AWS::EC2::Subnet
+    DependsOn: IPv6CidrBlock
+    Properties:
+      VpcId: !Ref VPC
+      AssignIpv6AddressOnCreation: true
+      Ipv6CidrBlock:
+        !Select
+          - 11
+          - Fn::Cidr:
+            - !Select [ 0, !GetAtt VPC.Ipv6CidrBlocks]
+            - 256
+            - 64
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: !Ref PrivateSubnet12CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Ref PrivateSubnet12Name
 
 Outputs:
   VPC:
@@ -152,14 +376,46 @@ Outputs:
     Value: !Ref PrivateSubnet1
 
   PrivateSubnet2:
-    Description: A reference to the private subnet in the 2nd Availability Zone
+    Description: A reference to the private subnet in the 1st Availability Zone
     Value: !Ref PrivateSubnet2
 
   PrivateSubnet3:
-    Description: A reference to the private subnet in the 2nd Availability Zone
+    Description: A reference to the private subnet in the 1st Availability Zone
     Value: !Ref PrivateSubnet3
 
   PrivateSubnet4:
-    Description: A reference to the private subnet in the 2nd Availability Zone
+    Description: A reference to the private subnet in the 1st Availability Zone
     Value: !Ref PrivateSubnet4
+
+  PrivateSubnet5:
+    Description: A reference to the private subnet in the 2nd Availability Zone
+    Value: !Ref PrivateSubnet5
+
+  PrivateSubnet6:
+    Description: A reference to the private subnet in the 2nd Availability Zone
+    Value: !Ref PrivateSubnet6
+
+  PrivateSubnet7:
+    Description: A reference to the private subnet in the 2nd Availability Zone
+    Value: !Ref PrivateSubnet7
+
+  PrivateSubnet8:
+    Description: A reference to the private subnet in the 2nd Availability Zone
+    Value: !Ref PrivateSubnet8
+
+  PrivateSubnet9:
+    Description: A reference to the private subnet in the 3rd Availability Zone
+    Value: !Ref PrivateSubnet9
+
+  PrivateSubnet10:
+    Description: A reference to the private subnet in the 3rd Availability Zone
+    Value: !Ref PrivateSubnet10
+
+  PrivateSubnet11:
+    Description: A reference to the private subnet in the 3rd Availability Zone
+    Value: !Ref PrivateSubnet11
+
+  PrivateSubnet12:
+    Description: A reference to the private subnet in the 3rd Availability Zone
+    Value: !Ref PrivateSubnet12
 

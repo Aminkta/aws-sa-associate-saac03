@@ -38,6 +38,70 @@
     {
         "ParameterKey": "PrivateSubnet4Name",
         "ParameterValue": "sn-web-A"
-    }    
+    },
+    {
+        "ParameterKey": "PrivateSubnet5CIDR",
+        "ParameterValue": "10.16.64.0/20"
+    },   
+    {
+        "ParameterKey": "PrivateSubnet5Name",
+        "ParameterValue": "sn-reserved-B"
+    },
+    {
+        "ParameterKey": "PrivateSubnet6CIDR",
+        "ParameterValue": "10.16.80.0/20"
+    },   
+    {
+        "ParameterKey": "PrivateSubnet6Name",
+        "ParameterValue": "sn-db-B"
+    },
+    {
+        "ParameterKey": "PrivateSubnet7CIDR",
+        "ParameterValue": "10.16.96.0/20"
+    },   
+    {
+        "ParameterKey": "PrivateSubnet7Name",
+        "ParameterValue": "sn-app-B"
+    },
+    {
+        "ParameterKey": "PrivateSubnet8CIDR",
+        "ParameterValue": "10.16.112.0/20"
+    },   
+    {
+        "ParameterKey": "PrivateSubnet8Name",
+        "ParameterValue": "sn-web-B"
+    },
+    {
+        "ParameterKey": "PrivateSubnet9CIDR",
+        "ParameterValue": "10.16.128.0/20"
+    },   
+    {
+        "ParameterKey": "PrivateSubnet9Name",
+        "ParameterValue": "sn-reserved-C"
+    },
+    {
+        "ParameterKey": "PrivateSubnet10CIDR",
+        "ParameterValue": "10.16.144.0/20"
+    },   
+    {
+        "ParameterKey": "PrivateSubnet10Name",
+        "ParameterValue": "sn-db-C"
+    },
+    {
+        "ParameterKey": "PrivateSubnet11CIDR",
+        "ParameterValue": "10.16.160.0/20"
+    },   
+    {
+        "ParameterKey": "PrivateSubnet11Name",
+        "ParameterValue": "sn-app-C"
+    },
+    {
+        "ParameterKey": "PrivateSubnet12CIDR",
+        "ParameterValue": "10.16.176.0/20"
+    },   
+    {
+        "ParameterKey": "PrivateSubnet12Name",
+        "ParameterValue": "sn-web-C"
+    }
 ]
   
