@@ -106,6 +106,14 @@
     {
         "ParameterKey": "RouteTableVpc1Name",
         "ParameterValue": "a4l-vpc1-rt-web"
+    },
+    {
+        "ParameterKey": "BastionImageId",
+        "ParameterValue": "ami-09d3b3274b6c5d4aa"  
+    },
+    {
+        "ParameterKey": "BastionInstanceType",
+        "ParameterValue": "t2.micro"  
     }
 ]
   

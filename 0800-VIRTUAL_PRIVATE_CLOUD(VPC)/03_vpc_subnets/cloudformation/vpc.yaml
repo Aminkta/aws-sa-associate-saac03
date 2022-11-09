@@ -109,6 +109,14 @@ Parameters:
     Description: Please Enter Route Table name
     Type: String
 
+  BastionImageId:
+    Description: Bastion Image ID
+    Type: String
+
+  BastionInstanceType:
+    Description: Bastion Image Type
+    Type: String
+
 Resources:
   VPC:
     Type: AWS::EC2::VPC
@@ -421,6 +429,43 @@ Resources:
     Properties:
       RouteTableId: !Ref PublicRouteTable
       SubnetId: !Ref PublicSubnet12
+
+  BastionKeyPair:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: BastionKeyPair
+
+  BastionSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      GroupDescription: Bastion Host Security Group
+      GroupName: BastionHostSecurityGroup
+      SecurityGroupIngress: 
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIpv6: ::/0
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: A4L-BASTION-SG
+
+  BastionHost:
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: !Ref BastionImageId
+      InstanceType: !Ref BastionInstanceType
+      KeyName: !Ref BastionKeyPair
+      SecurityGroupIds: 
+        - !Ref BastionSecurityGroup
+      SubnetId: !Ref PublicSubnet4
+      Tags:
+        - Key: Name
+          Value: A4L-BASTION
 
 Outputs:
   VPC:
